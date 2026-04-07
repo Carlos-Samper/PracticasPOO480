@@ -1,4 +1,4 @@
-package Practica1;
+package Practica1.Intefaces;
 
 public interface Liquido {
     void setVolumen(float volumen);

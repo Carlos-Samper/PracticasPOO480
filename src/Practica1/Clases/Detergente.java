@@ -1,4 +1,7 @@
-package Practica1;
+package Practica1.Clases;
+
+import Practica1.Intefaces.Descuento;
+import Practica1.Intefaces.Liquido;
 
 public class Detergente extends Producto implements Liquido, Descuento {
 

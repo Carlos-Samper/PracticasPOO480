@@ -1,4 +1,4 @@
-package Practica1;
+package Practica1.Clases;
 
 public abstract class Producto {
 

@@ -1,4 +1,7 @@
-package Practica1;
+package Practica1.Clases;
+
+import Practica1.Intefaces.Alimento;
+import Practica1.Intefaces.TipoCereal;
 
 import java.util.Date;
 

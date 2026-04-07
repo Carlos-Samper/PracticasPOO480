@@ -1,4 +1,9 @@
-package Practica1;
+package Practica1.Clases;
+
+import Practica1.Intefaces.Alimento;
+import Practica1.Intefaces.Descuento;
+import Practica1.Intefaces.Liquido;
+import Practica1.Intefaces.TipoVino;
 
 import java.util.Date;
 

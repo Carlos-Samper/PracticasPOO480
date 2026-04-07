@@ -1,4 +1,12 @@
-package Practica1;
+package Practica1.Aplicacion;
+
+import Practica1.Clases.Cereales;
+import Practica1.Clases.Detergente;
+import Practica1.Clases.Producto;
+import Practica1.Clases.Vino;
+import Practica1.Intefaces.Alimento;
+import Practica1.Intefaces.TipoCereal;
+import Practica1.Intefaces.TipoVino;
 
 import java.util.ArrayList;
 import java.util.List;
