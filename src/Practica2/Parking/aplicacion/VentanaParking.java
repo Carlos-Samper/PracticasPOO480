@@ -19,9 +19,9 @@ public class VentanaParking extends JFrame {
     }
 
     private void inicializar() {
-        setTitle("Práctica 2 - Parking");
+        setTitle("Practica 2 - Parking");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(900, 600);
+        setSize(680, 400);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
 
@@ -29,11 +29,11 @@ public class VentanaParking extends JFrame {
 
         JButton botonRegistrarEntrada = new JButton("Registrar entrada");
         JButton botonRegistrarSalida = new JButton("Registrar salida");
-        JButton botonAltaOficial = new JButton("Dar de alta vehículo oficial");
-        JButton botonAltaResidente = new JButton("Dar de alta vehículo residente");
+        JButton botonAltaOficial = new JButton("Dar de alta vehiculo oficial");
+        JButton botonAltaResidente = new JButton("Dar de alta vehiculo residente");
         JButton botonComenzarMes = new JButton("Comenzar mes");
         JButton botonInforme = new JButton("Generar informe de pagos de residentes");
-        JButton botonMostrarVehiculos = new JButton("Mostrar vehículos registrados");
+        JButton botonMostrarVehiculos = new JButton("Mostrar vehiculos registrados");
 
         botonRegistrarEntrada.addActionListener(e -> registrarEntrada());
         botonRegistrarSalida.addActionListener(e -> registrarSalida());
@@ -59,19 +59,19 @@ public class VentanaParking extends JFrame {
     }
 
     private void registrarEntrada() {
-        String matricula = pedirTexto("Introduce la matrícula del vehículo:");
+        String matricula = pedirTexto("Introduce la matricula del vehiculo.\nFormato valido: 0000-XXX, 0000XXX o 0000 XXX");
         if (matricula == null) {
             return;
         }
 
         ejecutarAccion(() -> {
             servicioParking.registrarEntrada(matricula);
-            mostrarMensaje("Entrada registrada correctamente para la matrícula " + matricula.toUpperCase() + ".");
+            mostrarMensaje("Entrada registrada correctamente para la matricula " + matricula.toUpperCase() + ".");
         });
     }
 
     private void registrarSalida() {
-        String matricula = pedirTexto("Introduce la matrícula del vehículo:");
+        String matricula = pedirTexto("Introduce la matricula del vehiculo.\nFormato valido: 0000-XXX, 0000XXX o 0000 XXX");
         if (matricula == null) {
             return;
         }
@@ -80,43 +80,43 @@ public class VentanaParking extends JFrame {
             ResultadoSalida resultado = servicioParking.registrarSalida(matricula);
             mostrarMensaje(
                     "Salida registrada correctamente.\n" +
-                    "Matrícula: " + resultado.getMatricula() + "\n" +
+                    "Matricula: " + resultado.getMatricula() + "\n" +
                     "Tipo: " + resultado.getTipoVehiculo() + "\n" +
                     "Minutos estacionados: " + resultado.getMinutosEstacionados() + "\n" +
-                    "Importe: " + String.format("%.2f €", resultado.getImporte()) + "\n" +
+                    "Importe: " + String.format("%.2f EUR", resultado.getImporte()) + "\n" +
                     "Detalle: " + resultado.getMensaje()
             );
         });
     }
 
     private void darDeAltaVehiculoOficial() {
-        String matricula = pedirTexto("Introduce la matrícula del vehículo oficial:");
+        String matricula = pedirTexto("Introduce la matricula del vehiculo oficial.\nFormato valido: 0000-XXX, 0000XXX o 0000 XXX");
         if (matricula == null) {
             return;
         }
 
         ejecutarAccion(() -> {
             servicioParking.darDeAltaVehiculoOficial(matricula);
-            mostrarMensaje("Vehículo oficial dado de alta correctamente: " + matricula.toUpperCase());
+            mostrarMensaje("Vehiculo oficial dado de alta correctamente: " + matricula.toUpperCase());
         });
     }
 
     private void darDeAltaVehiculoResidente() {
-        String matricula = pedirTexto("Introduce la matrícula del vehículo residente:");
+        String matricula = pedirTexto("Introduce la matricula del vehiculo residente.\nFormato valido: 0000-XXX, 0000XXX o 0000 XXX");
         if (matricula == null) {
             return;
         }
 
         ejecutarAccion(() -> {
             servicioParking.darDeAltaVehiculoResidente(matricula);
-            mostrarMensaje("Vehículo residente dado de alta correctamente: " + matricula.toUpperCase());
+            mostrarMensaje("Vehiculo residente dado de alta correctamente: " + matricula.toUpperCase());
         });
     }
 
     private void comenzarMes() {
         int confirmacion = JOptionPane.showConfirmDialog(
                 this,
-                "Se eliminarán las estancias de oficiales y se pondrán a cero los minutos de residentes. ¿Deseas continuar?",
+                "Se eliminaran las estancias de oficiales y se pondran a cero los minutos de residentes. Quieres continuar?",
                 "Confirmar comienzo de mes",
                 JOptionPane.YES_NO_OPTION
         );
@@ -133,7 +133,7 @@ public class VentanaParking extends JFrame {
 
     private void generarInforme() {
         JFileChooser selector = new JFileChooser();
-        selector.setDialogTitle("Selecciona el fichero de destino");
+        selector.setDialogTitle("Selecciona el fichero TXT de destino");
 
         int opcion = selector.showSaveDialog(this);
         if (opcion != JFileChooser.APPROVE_OPTION) {
@@ -141,9 +141,10 @@ public class VentanaParking extends JFrame {
         }
 
         ejecutarAccion(() -> {
-            String ruta = selector.getSelectedFile().getAbsolutePath();
+            String rutaSeleccionada = selector.getSelectedFile().getAbsolutePath();
+            String ruta = rutaSeleccionada.toLowerCase().endsWith(".txt") ? rutaSeleccionada : rutaSeleccionada + ".txt";
             servicioParking.generarInformePagosResidentes(ruta);
-            mostrarMensaje("Informe generado correctamente en:\n" + ruta);
+            mostrarMensaje("Informe TXT generado correctamente en:\n" + ruta);
         });
     }
 
@@ -157,7 +158,7 @@ public class VentanaParking extends JFrame {
             return null;
         }
         if (texto.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Debes introducir un valor válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Debes introducir un valor valido.", "Error", JOptionPane.ERROR_MESSAGE);
             return null;
         }
         return texto.trim();

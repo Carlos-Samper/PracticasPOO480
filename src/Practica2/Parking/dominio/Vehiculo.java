@@ -1,10 +1,14 @@
 package Practica2.Parking.dominio;
 
 import Practica2.Parking.excepcion.EstadoVehiculoException;
+import Practica2.Parking.excepcion.FormatoMatriculaInvalidoException;
 
 import java.time.LocalDateTime;
+import java.util.regex.Pattern;
 
 public abstract class Vehiculo {
+
+    private static final Pattern PATRON_MATRICULA = Pattern.compile("^\\d{4}([- ])?[A-Za-z]{3}$");
 
     private final String matricula;
     private LocalDateTime horaEntradaActual;
@@ -30,7 +34,7 @@ public abstract class Vehiculo {
             throw new IllegalArgumentException("La hora de entrada es obligatoria.");
         }
         if (estaDentro()) {
-            throw new EstadoVehiculoException("El vehículo " + matricula + " ya se encuentra dentro del aparcamiento.");
+            throw new EstadoVehiculoException("El vehiculo " + matricula + " ya se encuentra dentro del aparcamiento.");
         }
         this.horaEntradaActual = horaEntrada;
     }
@@ -40,7 +44,7 @@ public abstract class Vehiculo {
             throw new IllegalArgumentException("La hora de salida es obligatoria.");
         }
         if (!estaDentro()) {
-            throw new EstadoVehiculoException("El vehículo " + matricula + " no tiene una entrada registrada.");
+            throw new EstadoVehiculoException("El vehiculo " + matricula + " no tiene una entrada registrada.");
         }
 
         Estancia estancia = new Estancia(horaEntradaActual, horaSalida);
@@ -52,10 +56,16 @@ public abstract class Vehiculo {
 
     public abstract TipoVehiculo getTipoVehiculo();
 
-    protected static String normalizarMatricula(String matricula) {
+    public static String normalizarMatricula(String matricula) {
         if (matricula == null || matricula.trim().isEmpty()) {
-            throw new IllegalArgumentException("La matrícula es obligatoria.");
+            throw new IllegalArgumentException("La matricula es obligatoria.");
         }
-        return matricula.trim().toUpperCase();
+
+        String matriculaLimpia = matricula.trim().toUpperCase();
+        if (!PATRON_MATRICULA.matcher(matriculaLimpia).matches()) {
+            throw new FormatoMatriculaInvalidoException();
+        }
+
+        return matriculaLimpia.replace("-", "").replace(" ", "");
     }
 }

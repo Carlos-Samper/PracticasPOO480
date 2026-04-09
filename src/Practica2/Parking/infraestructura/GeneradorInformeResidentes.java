@@ -16,7 +16,7 @@ public class GeneradorInformeResidentes {
 
         try (PrintWriter escritor = new PrintWriter(new FileWriter(nombreFichero))) {
             escritor.printf("%-12s %28s %20s%n",
-                    "Matrícula",
+                    "Matricula",
                     "Tiempo estacionado (min.)",
                     "Cantidad a pagar");
 

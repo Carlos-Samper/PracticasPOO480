@@ -24,16 +24,16 @@ public class RepositorioVehiculosEnMemoria implements RepositorioVehiculos {
         if (matricula == null) {
             return Optional.empty();
         }
-        return Optional.ofNullable(vehiculos.get(matricula.trim().toUpperCase()));
+        return Optional.ofNullable(vehiculos.get(Vehiculo.normalizarMatricula(matricula)));
     }
 
     @Override
     public void guardar(Vehiculo vehiculo) {
         if (vehiculo == null) {
-            throw new IllegalArgumentException("El vehículo es obligatorio.");
+            throw new IllegalArgumentException("El vehiculo es obligatorio.");
         }
         if (vehiculos.containsKey(vehiculo.getMatricula())) {
-            throw new VehiculoDuplicadoException("Ya existe un vehículo registrado con la matrícula " + vehiculo.getMatricula() + ".");
+            throw new VehiculoDuplicadoException("Ya existe un vehiculo registrado con la matricula " + vehiculo.getMatricula() + ".");
         }
         vehiculos.put(vehiculo.getMatricula(), vehiculo);
     }
